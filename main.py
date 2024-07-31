@@ -20,7 +20,7 @@ logo = '''
 # The Jack/Queen/King all count as 10.
 # The Ace can count as 11 or 1.
 # Use the following list as the deck of cards:
-cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+# cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 # The cards in the list have equal probability of being drawn.
 # Cards are not removed from the deck as they are drawn.
 # The computer is the dealer
@@ -28,18 +28,27 @@ cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 import random
 
 def deal_card():
-    return random.choice(cards)
+    cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+    card = random.choice(cards)
+    return card
+
+def calculate_score(cards):
+    
+    if 11 in cards and 10 in cards and len(cards) == 2:
+        return 0 # 0 represents blackjack
+    
+    if 11 in cards and sum(cards) > 21:
+        cards.remove(11)
+        cards.append(1)
+    
+    return sum(cards)
 
 user_cards = []
 computer_cards = []
 
 for card in range(2):
-    random_card = deal_card()
-    user_cards.append(random_card)
+    user_cards.append(deal_card())
+    computer_cards.append(deal_card())
     
-for card in range(2):
-    random_card = deal_card()
-    computer_cards.append(random_card)
-    
-print(user_cards)
-print(computer_cards)
+user_score = calculate_score(user_cards)
+computer_score = calculate_score(computer_cards)
