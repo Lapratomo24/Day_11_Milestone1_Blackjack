@@ -43,6 +43,22 @@ def calculate_score(cards):
     
     return sum(cards)
 
+def compare(user_score, computer_score):
+    if user_score == computer_score:
+        return "It's a draw"
+    elif computer_score == 0:
+        return "Blackjack for computer; You lose."
+    elif user_score == 0:
+        return "Blackjack! You win."
+    elif user_score > 21:
+        return "You went over 21. You lose."
+    elif computer_score > 21:
+        return "Computer went over 21. You win."
+    elif user_score > computer_score:
+        return "You win."
+    else:
+        return "You lose."
+
 user_cards = []
 computer_cards = []
 game_end = False
@@ -56,7 +72,7 @@ while not game_end:
     user_score = calculate_score(user_cards)
     computer_score = calculate_score(computer_cards)
     print(f"Your cards are {user_cards}, and your score is {user_score}.")
-    print(f"Computer's first card is {computer_cards}.")
+    print(f"Computer's first card is {computer_cards[0]}.")
 
     if computer_score == 0 or user_score == 0 or user_score > 21:
         game_end = True
@@ -66,8 +82,12 @@ while not game_end:
             user_cards.append(deal_card())
         elif draw_card == 'no':
             game_end = True
-            print("Thank you for playing blackjack!")
     
 while computer_score != 0 and computer_score < 17:
     computer_cards.append(deal_card())
     computer_score = calculate_score(computer_cards)    
+
+print(f"Your final hand: {user_cards}; Final Score: {user_score}.")
+print(f"Computer's final hand: {computer_cards}; Final Score: {computer_score}.")
+print(compare(user_score, computer_score))
+print("Thank you for playing blackjack!")
