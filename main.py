@@ -45,10 +45,27 @@ def calculate_score(cards):
 
 user_cards = []
 computer_cards = []
+game_end = False
 
 for card in range(2):
     user_cards.append(deal_card())
     computer_cards.append(deal_card())
     
-user_score = calculate_score(user_cards)
-computer_score = calculate_score(computer_cards)
+while not game_end:
+    
+    user_score = calculate_score(user_cards)
+    computer_score = calculate_score(computer_cards)
+    print(f"Your cards are {user_cards}, and your score is {user_score}.")
+    print(f"Computer's first card is {computer_cards}.")
+
+    if computer_score == 0 or user_score == 0 or user_score > 21:
+        game_end = True
+    else:
+        draw_card = input("Would you like to draw another card? Type 'yes' or 'no': ")
+        if draw_card == 'yes':
+            user_cards.append(deal_card())
+        elif draw_card == 'no':
+            game_end = True
+            print("Thank you for playing blackjack!")
+    
+        
