@@ -25,6 +25,8 @@ logo = '''
 # Cards are not removed from the deck as they are drawn.
 # The computer is the dealer
 
+from art import logo
+import os
 import random
 
 def deal_card():
@@ -59,35 +61,45 @@ def compare(user_score, computer_score):
     else:
         return "You lose."
 
-user_cards = []
-computer_cards = []
-game_end = False
-
-for card in range(2):
-    user_cards.append(deal_card())
-    computer_cards.append(deal_card())
+def play_blackjack():
     
-while not game_end:
+    # print(logo)
     
-    user_score = calculate_score(user_cards)
-    computer_score = calculate_score(computer_cards)
-    print(f"Your cards are {user_cards}, and your score is {user_score}.")
-    print(f"Computer's first card is {computer_cards[0]}.")
+    user_cards = []
+    computer_cards = []
+    game_end = False
 
-    if computer_score == 0 or user_score == 0 or user_score > 21:
-        game_end = True
-    else:
-        draw_card = input("Would you like to draw another card? Type 'yes' or 'no': ")
-        if draw_card == 'yes':
-            user_cards.append(deal_card())
-        elif draw_card == 'no':
+    for card in range(2):
+        user_cards.append(deal_card())
+        computer_cards.append(deal_card())
+        
+    while not game_end:
+        
+        user_score = calculate_score(user_cards)
+        computer_score = calculate_score(computer_cards)
+        print(f"Your cards are {user_cards}, and your score is {user_score}.")
+        print(f"Computer's first card is {computer_cards[0]}.")
+
+        if computer_score == 0 or user_score == 0 or user_score > 21:
             game_end = True
-    
-while computer_score != 0 and computer_score < 17:
-    computer_cards.append(deal_card())
-    computer_score = calculate_score(computer_cards)    
+        else:
+            draw_card = input("Would you like to draw another card? Type 'yes' or 'no': ")
+            if draw_card == 'yes':
+                user_cards.append(deal_card())
+            elif draw_card == 'no':
+                game_end = True
+        
+    while computer_score != 0 and computer_score < 17:
+        computer_cards.append(deal_card())
+        computer_score = calculate_score(computer_cards)    
 
-print(f"Your final hand: {user_cards}; Final Score: {user_score}.")
-print(f"Computer's final hand: {computer_cards}; Final Score: {computer_score}.")
-print(compare(user_score, computer_score))
-print("Thank you for playing blackjack!")
+    print(f"Your final hand: {user_cards}; Final Score: {user_score}.")
+    print(f"Computer's final hand: {computer_cards}; Final Score: {computer_score}.")
+    print(compare(user_score, computer_score))
+    print("Thank you for playing!")
+    print("")
+    
+while input("Do you want to play a game of Blackjack? Type 'yes' or 'no': " ) == 'yes':
+    os.system("cls" if os.name == "nt" else "clear")
+    play_blackjack()
+
